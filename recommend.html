@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>나에게 맞는 그림책 추천</title>
+<style>
+  body {
+    font-family: "Arial", sans-serif;
+    background-color: #f4faff;
+    text-align: center;
+  }
+
+  h1 {
+    margin-top: 20px;
+  }
+
+  .container {
+    width: 90%;
+    max-width: 600px;
+    margin: 30px auto;
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 15px;
+    border: 2px solid #ddd;
+  }
+
+  .interest {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    margin: 20px 0;
+  }
+
+  .interest button {
+    padding: 15px;
+    font-size: 18px;
+    border-radius: 12px;
+    border: 2px solid #ccc;
+    background-color: #e3f2fd;
+    cursor: pointer;
+  }
+
+  .interest button.selected {
+    background-color: #ffecb3;
+    border-color: #ff9800;
+  }
+
+  #recommendBtn {
+    padding: 12px 25px;
+    font-size: 20px;
+    border-radius: 12px;
+    border: none;
+    background-color: #ffcc00;
+    cursor: pointer;
+  }
+
+  #result {
+    margin-top: 25px;
+    font-size: 20px;
+    font-weight: bold;
+  }
+
+  .book {
+    margin-top: 15px;
+    padding: 15px;
+    border-radius: 12px;
+    background-color: #f1f8e9;
+  }
+</style>
+</head>
+<body>
+
+<h1>📚 나에게 맞는 그림책 추천</h1>
+<p>내가 좋아하는 것을 골라 보세요 😊</p>
+
+<div class="container">
+  <div class="interest">
+    <button onclick="selectInterest(this, '동물')">🐶 동물</button>
+    <button onclick="selectInterest(this, '모험')">🗺️ 모험</button>
+    <button onclick="selectInterest(this, '우정')">🤝 친구</button>
+    <button onclick="selectInterest(this, '가족')">👨‍👩‍👧‍👦 가족</button>
+    <button onclick="selectInterest(this, '상상')">🌈 상상</button>
+    <button onclick="selectInterest(this, '자연')">🌳 자연</button>
+  </div>
+
+  <button id="recommendBtn" onclick="recommendBook()">책 추천받기</button>
+
+  <div id="result"></div>
+</div>
+
+<script>
+  let selectedInterest = "";
+
+  const books = {
+    동물: [
+      { title: "무지개 물고기", emoji: "🐟🌈", desc: "나누는 마음을 배워요." },
+      { title: "아주 배고픈 애벌레", emoji: "🐛🍎", desc: "자라는 과정을 배워요." }
+    ],
+    모험: [
+      { title: "괴물들이 사는 나라", emoji: "👹🌲", desc: "용기 있는 여행 이야기예요." },
+      { title: "오즈의 마법사", emoji: "🌪️👠", desc: "신기한 모험을 떠나요." }
+    ],
+    우정: [
+      { title: "사자와 생쥐", emoji: "🦁🐭", desc: "서로 돕는 친구 이야기예요." },
+      { title: "프레드릭", emoji: "🐭☀️", desc: "다른 친구의 소중함을 알아요." }
+    ],
+    가족: [
+      { title: "구름빵", emoji: "☁️🍞", desc: "가족의 따뜻함을 느껴요." },
+      { title: "엄마 마중", emoji: "👩‍👧🌙", desc: "엄마를 기다리는 마음이에요." }
+    ],
+    상상: [
+      { title: "이상한 나라의 앨리스", emoji: "🐰🎩", desc: "상상 속 세계로 떠나요." },
+      { title: "달 샤베트", emoji: "🌙🍧", desc: "밤하늘의 상상 이야기예요." }
+    ],
+    자연: [
+      { title: "나무는 좋다", emoji: "🌳😊", desc: "자연의 소중함을 배워요." },
+      { title: "씨앗은 어디로 갔을까?", emoji: "🌱❓", desc: "식물이 자라는 이야기예요." }
+    ]
+  };
+
+  function selectInterest(button, interest) {
+    document.querySelectorAll(".interest button")
+      .forEach(btn => btn.classList.remove("selected"));
+
+    button.classList.add("selected");
+    selectedInterest = interest;
+  }
+
+  function recommendBook() {
+    const resultDiv = document.getElementById("result");
+    resultDiv.innerHTML = "";
+
+    if (!selectedInterest) {
+      resultDiv.textContent = "❗ 좋아하는 것을 먼저 골라 주세요!";
+      return;
+    }
+
+    const list = books[selectedInterest];
+    const book = list[Math.floor(Math.random() * list.length)];
+
+    resultDiv.innerHTML = `
+      <div class="book">
+        <div style="font-size:40px;">${book.emoji}</div>
+        <div>📖 <strong>${book.title}</strong></div>
+        <div>${book.desc}</div>
+      </div>
+    `;
+  }
+</script>
+
+</body>
+</html>

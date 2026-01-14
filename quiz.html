@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>그림책 수수께끼 맞추기</title>
+<style>
+  body {
+    font-family: "Arial", sans-serif;
+    background-color: #f7fbff;
+    text-align: center;
+  }
+
+  h1 {
+    margin-top: 20px;
+  }
+
+  .game-box {
+    width: 90%;
+    max-width: 600px;
+    margin: 30px auto;
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 15px;
+    border: 2px solid #ddd;
+  }
+
+  .riddle {
+    font-size: 20px;
+    margin-bottom: 20px;
+  }
+
+  .emoji {
+    font-size: 40px;
+    margin-bottom: 15px;
+  }
+
+  .choices button {
+    display: block;
+    width: 100%;
+    margin: 8px 0;
+    padding: 12px;
+    font-size: 18px;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    background-color: #e3f2fd;
+  }
+
+  .choices button:hover {
+    background-color: #bbdefb;
+  }
+
+  #message {
+    margin-top: 15px;
+    font-size: 20px;
+    font-weight: bold;
+  }
+
+  #nextBtn {
+    margin-top: 20px;
+    padding: 10px 25px;
+    font-size: 18px;
+    border-radius: 10px;
+    border: none;
+    background-color: #ffcc00;
+    cursor: pointer;
+    display: none;
+  }
+</style>
+</head>
+<body>
+
+<h1>📚 그림책 수수께끼 맞추기</h1>
+<p>힌트를 보고 어떤 그림책인지 맞혀 보세요!</p>
+
+<div class="game-box">
+  <div class="emoji" id="emojiHint"></div>
+  <div class="riddle" id="riddleText"></div>
+
+  <div class="choices" id="choices"></div>
+
+  <div id="message"></div>
+  <button id="nextBtn" onclick="nextQuestion()">다음 문제</button>
+</div>
+
+<script>
+  const quiz = [
+    {
+      emoji: "🐛🍎",
+      riddle: "나는 아주 많이 먹고 자라요. 나비가 될 준비를 해요.",
+      answer: "아주 배고픈 애벌레",
+      options: ["구름빵", "아주 배고픈 애벌레", "무지개 물고기"]
+    },
+    {
+      emoji: "🐟🌈",
+      riddle: "내 몸에는 반짝이는 비늘이 있어요. 나누는 법을 배워요.",
+      answer: "무지개 물고기",
+      options: ["강아지 똥", "무지개 물고기", "사자와 생쥐"]
+    },
+    {
+      emoji: "☁️🍞",
+      riddle: "하늘에서 특별한 빵이 내려와요. 가족이 함께 나눠요.",
+      answer: "구름빵",
+      options: ["구름빵", "괴물들이 사는 나라", "강아지 똥"]
+    },
+    {
+      emoji: "👹🌲",
+      riddle: "괴물 친구들과 놀다가 다시 집으로 돌아가요.",
+      answer: "괴물들이 사는 나라",
+      options: ["괴물들이 사는 나라", "사자와 생쥐", "구름빵"]
+    },
+    {
+      emoji: "🐶💩",
+      riddle: "버려졌지만 결국 소중한 존재가 돼요.",
+      answer: "강아지 똥",
+      options: ["강아지 똥", "무지개 물고기", "아주 배고픈 애벌레"]
+    }
+  ];
+
+  let current = 0;
+  let score = 0;
+
+  const emojiHint = document.getElementById("emojiHint");
+  const riddleText = document.getElementById("riddleText");
+  const choicesDiv = document.getElementById("choices");
+  const message = document.getElementById("message");
+  const nextBtn = document.getElementById("nextBtn");
+
+  function loadQuestion() {
+    const q = quiz[current];
+    emojiHint.textContent = q.emoji;
+    riddleText.textContent = q.riddle;
+    message.textContent = "";
+    nextBtn.style.display = "none";
+    choicesDiv.innerHTML = "";
+
+    q.options.forEach(option => {
+      const btn = document.createElement("button");
+      btn.textContent = option;
+      btn.onclick = () => checkAnswer(option);
+      choicesDiv.appendChild(btn);
+    });
+  }
+
+  function checkAnswer(selected) {
+    if (selected === quiz[current].answer) {
+      message.textContent = "🎉 정답이에요!";
+      score++;
+    } else {
+      message.textContent = "❌ 다시 생각해 보세요!";
+    }
+    nextBtn.style.display = "inline-block";
+  }
+
+  function nextQuestion() {
+    current++;
+    if (current < quiz.length) {
+      loadQuestion();
+    } else {
+      emojiHint.textContent = "";
+      riddleText.textContent = "";
+      choicesDiv.innerHTML = "";
+      message.textContent = `🏆 게임 끝! ${quiz.length}문제 중 ${score}문제를 맞혔어요!`;
+      nextBtn.style.display = "none";
+    }
+  }
+
+  loadQuestion();
+</script>
+
+</body>
+</html>

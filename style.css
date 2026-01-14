@@ -1,0 +1,151 @@
+/* Global Styles */
+@import url('https://fonts.googleapis.com/css2?family=Jua&family=Nunito:wght@400;700&display=swap');
+
+:root {
+  --primary-color: #FFB7B2; /* Pastel Red (Coral) */
+  --secondary-color: #B5EAD7; /* Pastel Green (Mint) */
+  --accent-color: #C7CEEA; /* Pastel Purple/Blue */
+  --text-color: #4A4A4A;
+  --bg-color: #FDFBF7; /* Warm White */
+  --card-shadow: 0 10px 20px rgba(0,0,0,0.1);
+  --hover-shadow: 0 15px 30px rgba(0,0,0,0.15);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Namum Gothic', 'Jua', sans-serif; /* Jua for headings/playful text */
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow-x: hidden;
+}
+
+/* Background Decorations (Bubbles) */
+.bg-circle {
+  position: absolute;
+  border-radius: 50%;
+  z-index: -1;
+  opacity: 0.6;
+}
+.circle-1 { width: 300px; height: 300px; background: #FF9AA2; top: -50px; left: -50px; filter: blur(60px); }
+.circle-2 { width: 400px; height: 400px; background: #E2F0CB; bottom: -100px; right: -100px; filter: blur(70px); }
+.circle-3 { width: 200px; height: 200px; background: #E0BBE4; top: 40%; left: 20%; filter: blur(50px); opacity: 0.4; }
+
+/* Header */
+header {
+  text-align: center;
+  margin-top: 60px;
+  margin-bottom: 50px;
+  animation: float 3s ease-in-out infinite;
+}
+
+h1 {
+  font-family: 'Jua', cursive;
+  font-size: 3.5rem;
+  color: #555;
+  text-shadow: 2px 2px 0px #fff, 4px 4px 0px rgba(0,0,0,0.1);
+}
+
+.subtitle {
+  font-size: 1.2rem;
+  color: #777;
+  margin-top: 10px;
+  max-width: 600px;
+  line-height: 1.6;
+}
+
+/* Menu Grid */
+.menu-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 30px;
+  max-width: 900px;
+  width: 90%;
+  padding-bottom: 60px;
+}
+
+/* Menu Cards */
+.menu-card {
+  background: white;
+  border-radius: 25px;
+  padding: 40px;
+  text-decoration: none;
+  color: var(--text-color);
+  box-shadow: var(--card-shadow);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Bouncy transition */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  border: 3px solid transparent;
+}
+
+.menu-card:hover {
+  transform: translateY(-10px) scale(1.03);
+  box-shadow: var(--hover-shadow);
+  border-color: rgba(255, 255, 255, 0.8);
+}
+
+/* Individual Card Colors */
+.card-recommend { background: linear-gradient(135deg, #fff 50%, #FFDAC1 100%); }
+.card-quiz { background: linear-gradient(135deg, #fff 50%, #B5EAD7 100%); }
+.card-match { background: linear-gradient(135deg, #fff 50%, #C7CEEA 100%); }
+.card-search { background: linear-gradient(135deg, #fff 50%, #FF9AA2 100%); }
+
+.icon {
+  font-size: 4rem;
+  margin-bottom: 20px;
+  filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));
+  transition: transform 0.3s ease;
+}
+
+.menu-card:hover .icon {
+  transform: scale(1.2) rotate(10deg);
+}
+
+.card-title {
+  font-family: 'Jua', cursive;
+  font-size: 1.8rem;
+  margin-bottom: 10px;
+}
+
+.card-desc {
+  text-align: center;
+  font-size: 1rem;
+  color: #666;
+}
+
+/* Footer (optional) */
+footer {
+  margin-top: auto;
+  padding: 20px;
+  color: #999;
+  font-size: 0.9rem;
+}
+
+/* Animations */
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0px); }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .menu-grid {
+    grid-template-columns: 1fr;
+  }
+  h1 {
+    font-size: 2.5rem;
+  }
+}

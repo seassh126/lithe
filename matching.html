@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>그림책 표지와 제목 맞추기</title>
+<style>
+  body {
+    font-family: "Arial", sans-serif;
+    text-align: center;
+    background-color: #f5faff;
+  }
+
+  h1 {
+    margin-top: 20px;
+  }
+
+  .game-container {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    margin-top: 30px;
+  }
+
+  .covers, .titles {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+  }
+
+  .card {
+    padding: 15px;
+    font-size: 18px;
+    border: 2px solid #aaa;
+    border-radius: 12px;
+    background-color: white;
+    cursor: pointer;
+  }
+
+  .cover {
+    font-size: 40px;
+  }
+
+  .selected {
+    border-color: #ff9800;
+    background-color: #fff3e0;
+  }
+
+  .matched {
+    background-color: #c8e6c9;
+    border-color: #2e7d32;
+    cursor: default;
+  }
+
+  #message {
+    margin-top: 20px;
+    font-size: 20px;
+    font-weight: bold;
+  }
+</style>
+</head>
+<body>
+
+<h1>📚 그림책 표지와 제목을 맞춰요!</h1>
+<p>그림책을 잘 보았다면 맞출 수 있어요 😊</p>
+
+<div class="game-container">
+  <!-- 표지 -->
+  <div class="covers">
+    <div class="card cover" data-book="괴물들이 사는 나라">👹🌲</div>
+    <div class="card cover" data-book="아주 배고픈 애벌레">🐛🍎</div>
+    <div class="card cover" data-book="무지개 물고기">🐟🌈</div>
+    <div class="card cover" data-book="구름빵">☁️🍞</div>
+    <div class="card cover" data-book="사자와 생쥐">🦁🐭</div>
+    <div class="card cover" data-book="강아지 똥">🐶💩</div>
+  </div>
+
+  <!-- 제목 -->
+  <div class="titles">
+    <div class="card title" data-book="무지개 물고기">무지개 물고기</div>
+    <div class="card title" data-book="강아지 똥">강아지 똥</div>
+    <div class="card title" data-book="아주 배고픈 애벌레">아주 배고픈 애벌레</div>
+    <div class="card title" data-book="사자와 생쥐">사자와 생쥐</div>
+    <div class="card title" data-book="괴물들이 사는 나라">괴물들이 사는 나라</div>
+    <div class="card title" data-book="구름빵">구름빵</div>
+  </div>
+</div>
+
+<div id="message"></div>
+
+<script>
+  let selectedCover = null;
+  let selectedTitle = null;
+  let matchedCount = 0;
+
+  const covers = document.querySelectorAll(".cover");
+  const titles = document.querySelectorAll(".title");
+  const message = document.getElementById("message");
+
+  covers.forEach(cover => {
+    cover.addEventListener("click", () => {
+      if (cover.classList.contains("matched")) return;
+      clearSelection(covers);
+      selectedCover = cover;
+      cover.classList.add("selected");
+      checkMatch();
+    });
+  });
+
+  titles.forEach(title => {
+    title.addEventListener("click", () => {
+      if (title.classList.contains("matched")) return;
+      clearSelection(titles);
+      selectedTitle = title;
+      title.classList.add("selected");
+      checkMatch();
+    });
+  });
+
+  function checkMatch() {
+    if (selectedCover && selectedTitle) {
+      if (selectedCover.dataset.book === selectedTitle.dataset.book) {
+        selectedCover.classList.add("matched");
+        selectedTitle.classList.add("matched");
+        message.textContent = "🎉 정답이에요!";
+        matchedCount++;
+
+        if (matchedCount === 6) {
+          message.textContent = "🏆 모두 맞췄어요! 책을 잘 알고 있네요!";
+        }
+      } else {
+        message.textContent = "❌ 다시 생각해 보세요!";
+      }
+
+      setTimeout(() => {
+        clearSelection(covers);
+        clearSelection(titles);
+        selectedCover = null;
+        selectedTitle = null;
+      }, 800);
+    }
+  }
+
+  function clearSelection(elements) {
+    elements.forEach(el => el.classList.remove("selected"));
+  }
+</script>
+
+</body>
+</html>
